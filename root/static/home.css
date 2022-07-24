@@ -1,17 +1,29 @@
 main {
   display: grid;
-  grid-template-columns: 25% 75%;
-  grid-template-rows: 1fr;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 100vh;
   gap: 0px 0px;
   grid-template-areas: "aside section";
 }
 
 aside {
   grid-area: aside;
-  background-color: red;
+  background: var(--dark-lighter);
+  height: 100%;
+  width: 100%;
+  box-shadow: 5px 0px 10px #18181a55;
+  z-index: 2;
+  overflow-y: scroll;
+  padding: 32px;
+}
+
+.aside_child:not(.aside_child:nth-child(1)) {
+  padding-top: 32px;
 }
 
 section {
   grid-area: section;
-  background-color: black;
+  background-color: var(--dark);
+  height: 100%;
+  width: 100%;
 }

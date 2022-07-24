@@ -1,0 +1,23 @@
+{% macro aside_dropdown(id, title, options) -%}
+
+<div class='aside_dropdown aside_child' id="{{ id+'_master' }}">
+    <label for="{{ id }}">{{ title }}</label>
+    <div class="select-wrapper">
+        <img src="{{ url_for('static', filename='images/arrow-down.svg') }}" alt="">
+        <select name="{{ id }}" id="{{ id }}">
+            {% for option in options %}
+            <option value="{{ options[option] }}">{{ option }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+{%- endmacro %}
+
+
+{% macro aside_float(id, title, placeholder, min=0) -%}
+
+<div class='aside_float aside_child' id="{{ id+'_master' }}">
+    <label for="{{ id }}">{{ title }}</label>
+    <input type="number" step="any" id="{{ id }}" min={{min}} placeholder="{{ placeholder }}">
+</div>
+{%- endmacro %}
