@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 
 __ignore__/
+__private__/
