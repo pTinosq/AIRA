@@ -1,0 +1,40 @@
+:root {
+    --aqua: #29e1a8;
+    --dark: #121212;
+    --light: #fefefe;
+    --red: #fb4e4e;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    overflow: hidden !important;
+}
+
+html,
+body {
+    background-color: var(--light);
+    height: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+
+}
+
+@font-face {
+    font-family: 'open-sans-var';
+    src: url('../static/fonts/OpenSans-VariableFont_wdth,wght.ttf') format('truetype')
+}
+
+@font-face {
+    font-family: 'open-sans-italic-var';
+    src: url('../static/fonts/OpenSans-Italic-VariableFont_wdth,wght') format('truetype')
+}
+
+@font-face {
+    font-family: 'inter-var';
+    src: url('../static/fonts/Inter-VariableFont_slnt,wght.ttf') format('truetype')
+}

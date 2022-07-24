@@ -1,0 +1,17 @@
+main {
+  display: grid;
+  grid-template-columns: 25% 75%;
+  grid-template-rows: 1fr;
+  gap: 0px 0px;
+  grid-template-areas: "aside section";
+}
+
+aside {
+  grid-area: aside;
+  background-color: red;
+}
+
+section {
+  grid-area: section;
+  background-color: black;
+}
