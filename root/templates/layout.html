@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='core.css') }}">
+    <script src="static/js/storage_handler.js"></script>
     {% block head %}
     {% endblock %}
 
@@ -15,9 +16,10 @@
 <body>
 
     <div id="content">
-        {% block content %}
+        {% block content %} 
         {% endblock %}
     </div>
+    
 
 </body>
 

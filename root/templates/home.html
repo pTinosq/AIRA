@@ -29,9 +29,49 @@
     </aside>
 
     <section>
+        <div id="section_child">
+            <div class="title_bar">
+                <h2>BAG</h2>
+                <button>Load from file</button>
+                <button>Clear</button>
+            </div>
+            <form id="BAG_text_form" action="" method="get">
+                <textarea name="BAG_text" id="BAG_text"></textarea>
+            </form>
+            <div class="title_bar">
+                <button>Save</button>
+            </div>
+        </div>
 
+        <nav>
+            <div class="tabs">
+                <div class="tab tab_active">
+                    <a href="#">
+                        <p>BAG Editor</p>
+                    </a>
+                </div>
+
+                <div class="tab">
+                    <a href="#">
+                        <p>Line graph</p>
+                    </a>
+                </div>
+                <div class="tab">
+                    <a href="#">
+                        <p>Node graph</p>
+                    </a>
+                </div>
+                <div class="tab">
+                    <a href="#">
+                        <p>Verbose output</p>
+                    </a>
+                </div>
+            </div>
+        </nav>
     </section>
 
+
+    <script src="{{url_for('static', filename='js/component_storage.js')}}"></script>
     <script src="{{url_for('static', filename='js/dd_disabler.js')}}"></script>
 </main>
 {% endblock content %}

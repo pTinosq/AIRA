@@ -4,7 +4,7 @@
     <label for="{{ id }}">{{ title }}</label>
     <div class="select-wrapper">
         <img src="{{ url_for('static', filename='images/arrow-down.svg') }}" alt="">
-        <select name="{{ id }}" id="{{ id }}">
+        <select class="aside_data" name="{{ id }}" id="{{ id }}">
             {% for option in options %}
             <option value="{{ options[option] }}">{{ option }}</option>
             {% endfor %}
@@ -18,6 +18,6 @@
 
 <div class='aside_float aside_child' id="{{ id+'_master' }}">
     <label for="{{ id }}">{{ title }}</label>
-    <input type="number" step="any" id="{{ id }}" min={{min}} placeholder="{{ placeholder }}">
+    <input class="aside_data" type="number" step="any" id="{{ id }}" min={{min}} placeholder="{{ placeholder }}">
 </div>
 {%- endmacro %}
