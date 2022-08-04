@@ -3,13 +3,10 @@ function draw_graph() {
             d: get_ls_data()
         }))
         .then(function (response) {
-            console.log("a");
             return response.json()
 
         }).then(function (darg) {
-            console.log("b");
             if (darg[0] == true) {
-                console.log("c");
                 var plot = document.createElement("img");
                 plot.alt = plot;
                 plot.src = `data:image/png;base64, ${darg[1]}`
@@ -22,5 +19,5 @@ function draw_graph() {
 }
 
 document.addEventListener("DOMContentLoaded", (e) => {
-draw_graph();
+    draw_graph();
 })

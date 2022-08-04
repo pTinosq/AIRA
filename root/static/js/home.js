@@ -16,3 +16,20 @@ function save_bag() {
     // Saves BAG data to localstorage
     ls_set('BAG', btoa(document.getElementById("BAG_text").value))
 }
+
+function clear_bag() {
+    // Clears BAG - NOT FROM LS JUST FROM TEXTAREA
+    document.getElementById("BAG_text").value = "";
+}
+
+function load_from_file() {
+    let file = document.getElementById("BAG_load_from_file").files[0];
+
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        var textArea = document.getElementById("BAG_text");
+        textArea.value = e.target.result;
+    };
+    reader.readAsText(file);
+
+}

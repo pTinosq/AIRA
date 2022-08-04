@@ -33,8 +33,8 @@
         <div id="section_child">
             <div class="title_bar">
                 <h2>BAG</h2>
-                <button>Load from file</button>
-                <button>Clear</button>
+                <input id="BAG_load_from_file" type="file" accept=".txt,.bag" onchange="load_from_file()"></input>
+                <button onclick="clear_bag()">Clear</button>
             </div>
             <form id="BAG_text_form" action="" method="get">
                 <textarea name="BAG_text" id="BAG_text"></textarea>

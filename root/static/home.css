@@ -47,8 +47,10 @@ aside {
   float: left;
 }
 
-.title_bar button {
+.title_bar button,
+.title_bar input {
   float: right;
+  color: var(--light);
 }
 
 #BAG_text_form {
