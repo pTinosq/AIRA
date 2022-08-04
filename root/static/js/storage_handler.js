@@ -14,3 +14,13 @@ function ls_set(key, value) {
         return error
     }
 }
+
+function get_ls_data() {
+    return btoa(JSON.stringify(localStorage));
+}
+
+function q(e) {
+    // Adds localstorage to page parameters for flask to decipher
+    // Again, I understand it's not best practice but it'll do.
+    e.children[0].value = get_ls_data();
+}
