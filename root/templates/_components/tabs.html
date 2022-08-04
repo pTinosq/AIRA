@@ -1,0 +1,30 @@
+{% macro tab(href, name, active) %}
+<form onsubmit="return q(this);" class='tab{{ " tab_active" if active else "" }}' action="{{ href }}">
+    <input type="hidden" name="d" value="">
+    <input type="submit" value="{{ name }}">
+</form>
+{% endmacro %}
+
+{% macro tabs(active_page) %}
+{% set pages = [
+    {"href":"/home", "name": "BAG Editor", "id":"home"},
+    {"href":"/line_graph", "name": "Line graph","id":"line_graph"},
+    {"href":"/node_graph", "name": "Node graph", "id":"node_graph"},
+    {"href":"/verbose_output", "name": "Verbose output", "id":"verbose_output"},
+] %}
+
+<nav>
+    <div class="tabs">
+        {% for page in pages %}
+            {% if page.id == active_page %}
+            {{ tab(page.href, page.name, true) }}
+
+            {% else %}
+            {{ tab(page.href, page.name, false) }}
+
+            {% endif %}
+        {% endfor %}
+    </div>
+</nav>
+
+{% endmacro %}

@@ -1,5 +1,6 @@
 {% from "_components/aside.html" import aside_dropdown with context %}
 {% from "_components/aside.html" import aside_float with context %}
+{% from "_components/tabs.html" import tabs with context %}
 {% set component_styles = ['aside.css'] %}
 
 {% extends "layout.html" %}
@@ -39,38 +40,14 @@
                 <textarea name="BAG_text" id="BAG_text"></textarea>
             </form>
             <div class="title_bar">
-                <button>Save</button>
+                <button onclick="save_bag()">Save</button>
             </div>
         </div>
 
-        <nav>
-            <div class="tabs">
-                <div class="tab tab_active">
-                    <a href="#">
-                        <p>BAG Editor</p>
-                    </a>
-                </div>
-
-                <div class="tab">
-                    <a href="#">
-                        <p>Line graph</p>
-                    </a>
-                </div>
-                <div class="tab">
-                    <a href="#">
-                        <p>Node graph</p>
-                    </a>
-                </div>
-                <div class="tab">
-                    <a href="#">
-                        <p>Verbose output</p>
-                    </a>
-                </div>
-            </div>
-        </nav>
+        {{ tabs('home') }}
     </section>
 
-
+    <script src="{{url_for('static', filename='js/home.js')}}"></script>
     <script src="{{url_for('static', filename='js/component_storage.js')}}"></script>
     <script src="{{url_for('static', filename='js/dd_disabler.js')}}"></script>
 </main>
