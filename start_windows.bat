@@ -1,1 +1,1 @@
-venv\Scripts\activate&flask run
+flask run
