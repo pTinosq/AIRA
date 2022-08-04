@@ -61,6 +61,7 @@ class Approximators:
 
     def approximate_solution(self, delta, epsilon, verbose=False, generate_plot=False):
         self.initialise_arrays()
+        verbose_output = ""
 
         if generate_plot:
             self.initialise_graph_data()
@@ -83,4 +84,8 @@ class Approximators:
 
         if (verbose):
             print_args = '\n'.join([str(x) for x in self.ads.arguments])
-            print(f"{self.ads.name}, {self.ads.approximator.name}\nTime: {time}\n{print_args}\n")
+            verbose_output = f"{self.ads.name}, {self.ads.approximator.name}\nTime: {time}\n{print_args}\n"
+            return verbose_output
+        
+        else:
+            return None

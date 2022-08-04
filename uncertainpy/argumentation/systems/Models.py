@@ -29,7 +29,8 @@ class Models:
         if self.BAG is None:
             raise AttributeError("Model does not have BAG attached")
 
-        self.approximator.approximate_solution(delta, epsilon, verbose, generate_plot)
+        verbose_output = self.approximator.approximate_solution(delta, epsilon, verbose, generate_plot)
+        return verbose_output
 
     def __repr__(self, name) -> str:
         return f"{name}({self.BAG}, {self.approximator}, {self.arguments}, {self.argument_strength}, {self.attacker}, {self.supporter})"
