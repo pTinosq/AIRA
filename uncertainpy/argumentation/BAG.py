@@ -7,37 +7,43 @@ from .Attack import Attack
 
 
 class BAG:
-    # {Name: Argument}
     arguments = {}
     attacks = []
     supports = []
 
-    def __init__(self, path=None):
-        self.path = path
+    def __init__(self, content=None, is_path=False):
+        self.content = content
+        self.is_path = is_path
 
-        if (path is None):
+        if (content is None):
             pass
         else:
-            with open(os.path.abspath(path), "r") as f:
-                for line in f.readlines():
-                    k_name = line.split("(")[0]
-                    if k_name in string.whitespace:
-                        pass
-                    else:
-                        k_args = re.findall(rf"{k_name}\((.*?)\)", line)[0].replace(" ", "").split(",")
-                        if k_name == "arg":
-                            argument = Argument(k_args[0], float(k_args[1]), None, [], [])
-                            self.arguments[argument.name] = argument
+            BAG_lines = []
 
-                        elif k_name == "att":
-                            attacker = self.arguments[k_args[0]]
-                            attacked = self.arguments[k_args[1]]
-                            self.add_attack(attacker, attacked)
+            if (is_path):
+                with open(os.path.abspath(content), "r") as f:
+                    content = f.read()
 
-                        elif k_name == "sup":
-                            supporter = self.arguments[k_args[0]]
-                            supported = self.arguments[k_args[1]]
-                            self.add_support(supporter, supported)
+            content = content.replace("\n", "")  # Convert to one line
+            BAG_lines = content.split(";")  # Split at semi colons
+            BAG_lines = list(filter(None, BAG_lines))  # Removes empty strings
+
+            for line in BAG_lines:
+                k_name = line.split("(")[0]
+                k_args = re.findall(rf"{k_name}\((.*?)\)", line)[0].replace(" ", "").split(",")
+                if k_name == "arg":
+                    argument = Argument(k_args[0], float(k_args[1]), None, [], [])
+                    self.arguments[argument.name] = argument
+
+                elif k_name == "att":
+                    attacker = self.arguments[k_args[0]]
+                    attacked = self.arguments[k_args[1]]
+                    self.add_attack(attacker, attacked)
+
+                elif k_name == "sup":
+                    supporter = self.arguments[k_args[0]]
+                    supported = self.arguments[k_args[1]]
+                    self.add_support(supporter, supported)
 
     def add_attack(self, attacker, attacked):
         if type(attacker) != Argument:
