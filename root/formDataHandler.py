@@ -71,8 +71,8 @@ def graph_from_ls(x):
         DELTA = float(x['delta_aside_fl'])
         EPSILON = float(x['epsilon_aside_fl'])
 
-        result = model.solve(delta=DELTA, epsilon=EPSILON, verbose=True, generate_plot=True)
-        plot = graph(model, DELTA, EPSILON)
+        model.solve(delta=DELTA, epsilon=EPSILON, verbose=False, generate_plot=True)
+        plot = graph(model, DELTA, EPSILON, title="")
 
         plot_io_bytes = io.BytesIO()
         plot.savefig(plot_io_bytes, format='jpg')
