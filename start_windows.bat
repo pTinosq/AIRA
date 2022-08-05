@@ -1,1 +1,1 @@
-flask run
+waitress-serve root:app
