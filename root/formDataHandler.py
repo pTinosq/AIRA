@@ -25,8 +25,8 @@ def isBase64(sb):
         return False
 
 
-def graph_from_ls(x):
-    """Converts localstorage data to argumentation information"""
+def generate_model(x, return_vbo, draw_graph):
+    """Creates model from localstorage data"""
     try:
         # SET MODEL
         if (x['model_aside_dd'] == 'QuadraticEnergyModel'):
@@ -71,15 +71,37 @@ def graph_from_ls(x):
         DELTA = float(x['delta_aside_fl'])
         EPSILON = float(x['epsilon_aside_fl'])
 
-        model.solve(delta=DELTA, epsilon=EPSILON, verbose=False, generate_plot=True)
-        plot = graph(model, DELTA, EPSILON, title="")
+        r = model.solve(delta=DELTA, epsilon=EPSILON, verbose=return_vbo, generate_plot=draw_graph)
 
-        plot_io_bytes = io.BytesIO()
-        plot.savefig(plot_io_bytes, format='jpg')
-        plot_io_bytes.seek(0)
-        plotb64 = base64.b64encode(plot_io_bytes.read())
+        if return_vbo:
+            return r
+
+        if draw_graph:
+            plot = graph(model, DELTA, EPSILON, title="")
+            plot_io_bytes = io.BytesIO()
+            plot.savefig(plot_io_bytes, format='jpg')
+            plot_io_bytes.seek(0)
+            plotb64 = base64.b64encode(plot_io_bytes.read())
+            return plotb64.decode()
+
+        return None
 
     except Exception as e:
+        print(traceback.format_exc())
         return return_invalid(str(e))
 
-    return [True, plotb64.decode()]
+
+def vbo_from_ls(x):
+    """Converts localstorage data to argumentation information and returns verbose output"""
+    vbo = generate_model(x=x, return_vbo=True, draw_graph=False)
+    if vbo is None:
+        return return_invalid('Model error')
+    return [True, vbo]
+
+
+def graph_from_ls(x):
+    """Converts localstorage data to argumentation information and returns graphed data"""
+    plotb64 = generate_model(x=x, return_vbo=False, draw_graph=True)
+    if plotb64 is None:
+        return return_invalid('Model error')
+    return [True, plotb64]
