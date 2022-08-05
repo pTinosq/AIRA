@@ -18,6 +18,21 @@
 
 <div class='aside_float aside_child' id="{{ id+'_master' }}">
     <label for="{{ id }}">{{ title }}</label>
-    <input class="aside_data" type="number" step="any" id="{{ id }}" min={{min}} placeholder="{{ placeholder }}">
+    <input class="aside_data" type="number" id="{{ id }}" min={{min}} step=".001"
+        placeholder="{{ placeholder }}">
 </div>
 {%- endmacro %}
+
+{% macro aside() %}
+<aside>
+    <form action="" method="get">
+        {{ aside_dropdown("model_aside_dd", "Model", {"Quadratic Energy": "QuadraticEnergyModel", "Squared Energy": "SquaredEnergyModel", "Continuous DFQuAD":"ContinuousDFQuADModel", "Continuous Squared DFQuAD":"ContinuousSquaredDFQuADModel", "Continuous Euler Based":"ContinuousEulerBasedModel", "Continuous Modular":"ContinuousModularModel"}) }}
+        {{ aside_dropdown("approx_aside_dd", "Approximator", {"RK4": "RK4"}) }}
+        {{ aside_dropdown("aggr_aside_dd", "Aggregate", {"Product Aggregation": "ProductAggregation", "Sum Aggregation":"SumAggregation"}) }}
+        {{ aside_dropdown("inf_aside_dd", "Influence", {"Euler based": "EulerBasedInfluence", "Linear": "LinearInfluence", "Quadratic Maximum": "QuadraticMaximumInfluence"}) }}
+        {{ aside_float("inf_aside_fl", "Influence Conservativeness", "Enter influence Conservativeness here") }}
+        {{ aside_float("delta_aside_fl", "Delta", "Enter Delta value here") }}
+        {{ aside_float("epsilon_aside_fl", "Epsilon", "Enter Epsilon value here") }}
+    </form>
+</aside>
+{% endmacro %}
