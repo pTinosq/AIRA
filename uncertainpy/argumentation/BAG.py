@@ -14,6 +14,7 @@ class BAG:
     def __init__(self, content=None, is_path=False):
         self.content = content
         self.is_path = is_path
+        self.arguments.clear()
 
         if (content is None):
             pass

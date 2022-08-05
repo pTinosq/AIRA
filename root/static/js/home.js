@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 function save_bag() {
     // Saves BAG data to localstorage
     ls_set('BAG', btoa(document.getElementById("BAG_text").value))
+    alert("Saved");
 }
 
 function clear_bag() {
