@@ -1,5 +1,6 @@
 {% from "_components/aside.html" import aside_dropdown with context %}
 {% from "_components/aside.html" import aside_float with context %}
+{% from '_components/aside.html' import aside with context %}
 {% from "_components/tabs.html" import tabs with context %}
 {% set component_styles = ['aside.css', 'tabs.css'] %}
 
@@ -17,17 +18,7 @@
 {% block content %}
 
 <main>
-    <aside>
-        <form action="" method="get">
-            {{ aside_dropdown("model_aside_dd", "Model", {"Quadratic Energy": "QuadraticEnergyModel", "Squared Energy": "SquaredEnergyModel", "Continuous DFQuAD":"ContinuousDFQuADModel", "Continuous Squared DFQuAD":"ContinuousSquaredDFQuADModel", "Continuous Euler Based":"ContinuousEulerBasedModel", "Continuous Modular":"ContinuousModularModel"}) }}
-            {{ aside_dropdown("approx_aside_dd", "Approximator", {"RK4": "RK4"}) }}
-            {{ aside_dropdown("aggr_aside_dd", "Aggregate", {"Product Aggregation": "ProductAggregation", "Sum Aggregation":"SumAggregation"}) }}
-            {{ aside_dropdown("inf_aside_dd", "Influence", {"Euler based": "EulerBasedInfluence", "Linear": "LinearInfluence", "Quadratic Maximum": "QuadraticMaximumInfluence"}) }}
-            {{ aside_float("inf_aside_fl", "Influence Conservativeness", "Enter influence Conservativeness here") }}
-            {{ aside_float("delta_aside_fl", "Delta", "Enter Delta value here") }}
-            {{ aside_float("epsilon_aside_fl", "Epsilon", "Enter Epsilon value here") }}
-        </form>
-    </aside>
+    {{ aside() }}
 
     <section>
         <div id="section_child">
@@ -36,9 +27,26 @@
                 <button onclick="open_image_in_new_tab()">Show in new tab</button>
             </div>
             <div id="line_graph_image" style="overflow-y: auto;">
+                <div style="display:block;" class="spinner_base" id="spinner_base">
+                    <div class="spinner">
+                        <div class="lds-ellipsis">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:none;" class="response_base" id="response_base">
+                    <div class="response">
+                        <h2 id="response_title">Error: Loading...</h2>
+                        <p id="response_body">Loading...</p>
+                    </div>
+                </div>
             </div>
             <div class="title_bar">
-                <button onclick="draw_graph();">Redraw</button>
+                <button id="toggle_auto_redraw" onclick="toggle_auto_redraw();">Turn off auto redraw</button>
+                <button onclick="draw_graph();">Load</button>
             </div>
         </div>
         {{ tabs('line_graph') }}
@@ -46,7 +54,7 @@
 
 
     <script src="{{url_for('static', filename='js/line_graph.js')}}"></script>
-    <script src="{{url_for('static', filename='js/component_storage.js')}}"></script>
+    <script src="{{url_for('static', filename='js/component_storage_line_graph.js')}}"></script>
     <script src="{{url_for('static', filename='js/dd_disabler.js')}}"></script>
 </main>
 {% endblock content %}
