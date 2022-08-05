@@ -9,7 +9,8 @@ function get_vbo() {
             if (result[0] == true) {
                 document.getElementById("VBO_text").value = result[1];
             } else {
-                alert("error", result[1]);
+                output = `==========${result[1]}==========\n${result[2]}`;
+                document.getElementById("VBO_text").value = output;
             }
         });
 }
@@ -18,6 +19,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
     get_vbo();
 });
 
-function regenerate_VBO(){
+function regenerate_VBO() {
     get_vbo();
 }
