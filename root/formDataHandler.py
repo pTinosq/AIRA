@@ -3,7 +3,6 @@ import traceback
 import uncertainpy.argumentation as arg
 from uncertainpy.argumentation.graphing import graph
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from matplotlib.figure import Figure
 import io
 
 
@@ -31,6 +30,52 @@ def generate_model(x, return_vbo, draw_graph):
         # SET MODEL
         if (x['model_aside_dd'] == 'QuadraticEnergyModel'):
             model = arg.systems.QuadraticEnergyModel()
+
+        elif (x['model_aside_dd'] == 'ContinuousEulerBasedModel'):
+            model = arg.systems.ContinuousEulerBasedModel()
+
+        elif (x['model_aside_dd'] == 'ContinuousDFQuADModel'):
+            model = arg.systems.ContinuousDFQuADModel()
+
+        elif (x['model_aside_dd'] == 'ContinuousSquaredDFQuADModel'):
+            model = arg.systems.ContinuousSquaredDFQuADModel()
+
+        elif (x['model_aside_dd'] == 'SquaredEnergyModel'):
+            model = arg.systems.SquaredEnergyModel()
+
+        elif (x['model_aside_dd'] == 'ContinuousModularModel'):
+            # It gets a bit crazy here
+            model = arg.systems.ContinuousModularModel()
+            if x['aggr_aside_dd'] == 'SumAggregation':
+                model.aggregation = arg.aggregation.SumAggregation()
+            elif x['aggr_aside_dd'] == 'ProductAggregation':
+                model.aggregation = arg.aggregation.ProductAggregation()
+            else:
+                return return_invalid('Invalid aggregation error.')
+
+            if x['inf_aside_dd'] == 'EulerBasedInfluence':
+                model.influence = arg.influence.EulerBasedInfluence()
+
+            elif x['inf_aside_dd'] == 'QuadraticMaximumInfluence':
+                # Check if conservativeness is valid
+                if len(x['inf_aside_fl']) <= 0:
+                    return return_invalid('Invalid conservativeness error.')
+                else:
+                    try:
+                        model.influence = arg.influence.QuadraticMaximumInfluence(conservativeness=float(x['inf_aside_fl']))
+                    except ValueError:
+                        return return_invalid('Invalid conservativeness error.')
+
+            elif x['inf_aside_dd'] == 'LinearInfluence':
+                # Check if conservativeness is valid
+                if len(x['inf_aside_fl']) <= 0:
+                    return return_invalid('Invalid conservativeness error.')
+                else:
+                    try:
+                        model.influence = arg.influence.LinearInfluence(conservativeness=float(x['inf_aside_fl']))
+                    except ValueError:
+                        return return_invalid('Invalid conservativeness error.')
+
         else:
             return return_invalid('Invalid model error.')
 
