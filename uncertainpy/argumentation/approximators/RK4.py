@@ -7,7 +7,6 @@ class RK4(Approximators):
         self.name = "RK4"
 
     def perform_iteration(self, delta, epsilon):
-
         k1 = self.ads.compute_derivative_at(self.ads.argument_strength)
 
         y2 = []

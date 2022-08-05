@@ -11,7 +11,9 @@ class Approximators:
         self.name = name
 
     def initialise_arrays(self):
+
         argument_set = list(self.ads.BAG.arguments.values())
+
         arg_to_index = {}
 
         arguments = []
@@ -49,9 +51,11 @@ class Approximators:
             self.ads.arguments[i].strength = self.ads.argument_strength[i]
 
     def perform_iteration(delta, epsilon):
+        # Replaced by method in individual approximators
         return None
 
     def initialise_graph_data(self):
+        self.graph_data = {}
         for argument in self.ads.arguments:
             self.graph_data[argument.name] = [(0, argument.initial_weight)]
 
@@ -86,6 +90,6 @@ class Approximators:
             print_args = '\n'.join([str(x) for x in self.ads.arguments])
             verbose_output = f"{self.ads.name}, {self.ads.approximator.name}\nTime: {time}\n{print_args}\n"
             return verbose_output
-        
+
         else:
             return None
