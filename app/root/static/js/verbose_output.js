@@ -1,4 +1,5 @@
 function get_vbo() {
+    document.getElementById("reload").disabled = true;
     fetch('/api/fetch_verbose_output?' + new URLSearchParams({
             d: get_ls_data()
         }))
@@ -12,6 +13,7 @@ function get_vbo() {
                 output = `==========${result[1]}==========\n${result[2]}`;
                 document.getElementById("VBO_text").value = output;
             }
+            document.getElementById("reload").disabled = false;
         });
 }
 

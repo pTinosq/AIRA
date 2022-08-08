@@ -2,12 +2,15 @@
   /* These names make no sense. I know. */
   --dark: #28242e;
   --dark-lighter: #3a3641;
+  --dark-lightest: #5a5467;
   --light: #cbcbcb;
   --light-lighter: #f1f1f1;
   --light-darker: #989898;
   --purple: #2c1951;
+  --purple-dark: #190d33;
   --purple-light: #47336e;
   --purple-lighter: rgb(107, 71, 179);
+  --purple-lightest: rgb(150, 113, 224);
   --purple-pastel: #2c2736;
 }
 
@@ -44,6 +47,11 @@ a {
 input,
 label {
   display: block;
+}
+
+.spo {
+  /* Span Offset - for offsetting underline on chars where you need to */
+  text-underline-offset: 10px;
 }
 
 label,
@@ -105,6 +113,7 @@ main {
   transform: translateY(-50%);
   float: left;
   margin-right: auto;
+  height: fit-content;
 }
 
 .title_bar button,

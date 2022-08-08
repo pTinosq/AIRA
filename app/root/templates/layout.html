@@ -1,3 +1,5 @@
+{% from "_components/keybinds.html" import keybinds_modal with context %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,18 +10,21 @@
     <title>Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='core.css') }}">
     <script src="static/js/storage_handler.js"></script>
+    <script src="static/js/keybinds.js"></script>
     {% block head %}
     {% endblock %}
 
 </head>
 
 <body>
+    
+    {{ keybinds_modal() }}
 
     <div id="content">
-        {% block content %} 
+        {% block content %}
         {% endblock %}
     </div>
-    
+
 
 </body>
 

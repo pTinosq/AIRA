@@ -2,7 +2,10 @@ import base64
 import traceback
 import uncertainpy.argumentation as arg
 from uncertainpy.argumentation.graphing import graph
+from uncertainpy.argumentation.Argument import Argument
 import io
+import networkx as nx
+import matplotlib.pyplot as plt
 
 
 def return_invalid(title, body):
@@ -23,7 +26,7 @@ def isBase64(sb):
         return False
 
 
-def generate_model(x, return_vbo, draw_graph):
+def generate_model(x, return_vbo, draw_graph, draw_nodes) -> list:
     """Creates model from localstorage data"""
     try:
         # SET MODEL
@@ -122,6 +125,7 @@ def generate_model(x, return_vbo, draw_graph):
         if (EPSILON < 10e-12):
             return return_invalid('Invalid Epsilon value', 'The value for Epsilon cannot be less than 10e-12 for performance reasons. Try again with a greater value (10e-4 is recommended)')
         r = model.solve(delta=DELTA, epsilon=EPSILON, verbose=return_vbo, generate_plot=draw_graph)
+
         if return_vbo:
             return [True, r]
 
@@ -129,6 +133,46 @@ def generate_model(x, return_vbo, draw_graph):
             plot = graph(model, DELTA, EPSILON, title="")
             plot_io_bytes = io.BytesIO()
             plot.savefig(plot_io_bytes, format='jpg')
+            plot_io_bytes.seek(0)
+            plotb64 = base64.b64encode(plot_io_bytes.read())
+            return [True, plotb64.decode()]
+
+        if draw_nodes:
+            x = model.BAG.get_arguments()
+
+            nodes = []
+            node_widths = []
+            # First we add all the arguments into the nodes array
+            for a in x:
+                nodes.append(a.name)
+                node_widths.append(a.strength)
+
+            edges = []
+            edge_colors = []
+            # Add attackers
+            for a in x:
+                for att in a.attackers:
+                    edges.append((att.name, a.name, 1))
+                    edge_colors.append('red')
+
+            # Add supporters
+            for a in x:
+                for s in a.supporters:
+                    edges.append((s.name, a.name, 1))
+                    edge_colors.append('green')
+
+            fig, ax = plt.subplots()
+
+            G = nx.DiGraph()
+            G.add_nodes_from(nodes)
+            G.add_weighted_edges_from(edges)
+            node_widths = list(map(lambda a: a*2000, node_widths))
+            pos = nx.spring_layout(G)
+
+            nx.draw(G, pos, with_labels=True, ax=ax, edge_color=edge_colors, node_size=node_widths, arrowsize=10, arrowstyle='simple')
+
+            plot_io_bytes = io.BytesIO()
+            plt.savefig(plot_io_bytes, format='jpg')
             plot_io_bytes.seek(0)
             plotb64 = base64.b64encode(plot_io_bytes.read())
             return [True, plotb64.decode()]
@@ -145,7 +189,7 @@ def generate_model(x, return_vbo, draw_graph):
 
 def vbo_from_ls(x):
     """Converts localstorage data to argumentation information and returns verbose output"""
-    vbo = generate_model(x=x, return_vbo=True, draw_graph=False)
+    vbo = generate_model(x=x, return_vbo=True, draw_graph=False, draw_nodes=False)
     if vbo is None:
         return return_invalid('Unknown error', 'I don\'t know how you managed this. Error code: 0x555')
 
@@ -154,7 +198,16 @@ def vbo_from_ls(x):
 
 def graph_from_ls(x):
     """Converts localstorage data to argumentation information and returns graphed data"""
-    plotb64 = generate_model(x=x, return_vbo=False, draw_graph=True)
+    plotb64 = generate_model(x=x, return_vbo=False, draw_graph=True, draw_nodes=False)
+    if plotb64 is None:
+        return return_invalid('Unknown error', 'I don\'t know how you managed this. Error code: 0x556')
+
+    return plotb64
+
+
+def nodes_from_ls(x):
+    """Converts localstorage data to argumentation information and returns node graph"""
+    plotb64 = generate_model(x=x, return_vbo=False, draw_graph=False, draw_nodes=True)
     if plotb64 is None:
         return return_invalid('Unknown error', 'I don\'t know how you managed this. Error code: 0x556')
 

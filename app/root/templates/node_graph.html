@@ -2,12 +2,12 @@
 {% from "_components/aside.html" import aside_float with context %}
 {% from '_components/aside.html' import aside with context %}
 {% from "_components/tabs.html" import tabs with context %}
-{% set component_styles = ['aside.css', 'tabs.css'] %}
+{% set component_styles = ['aside.css', 'tabs.css', 'keybinds.css'] %}
 
 {% extends "layout.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='line_graph.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='node_graph.css') }}">
 
 {% for x in component_styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename="components/"+x) }}">
@@ -23,10 +23,10 @@
     <section>
         <div id="section_child">
             <div class="title_bar">
-                <h2>Line graph</h2>
-                <button onclick="open_image_in_new_tab()">Show in new tab</button>
+                <h2>Node Graph</h2>
+                <button onclick="open_image_in_new_tab()" data-hotkey="p" data-hotkey-desc="Show in new tab">Show in new tab</button>
             </div>
-            <div id="line_graph_image" style="overflow-y: auto;">
+            <div id="node_graph_image" style="overflow-y: auto;">
                 <div style="display:block;" class="spinner_base" id="spinner_base">
                     <div class="spinner">
                         <div class="lds-ellipsis">
@@ -45,16 +45,18 @@
                 </div>
             </div>
             <div class="title_bar">
-                <button id="toggle_auto_redraw" onclick="toggle_auto_redraw();">Turn off auto redraw</button>
-                <button onclick="draw_graph();">Load</button>
+                <button onclick="open_keybind_modal()" id="show_keybinds" data-hotkey="z" data-hotkey-desc="Show keybinds">Show keybinds</button>
+                <button id="toggle_auto_redraw" onclick="toggle_auto_redraw();" data-hotkey="n" data-hotkey-desc="Toggle auto redraw">Turn off auto redraw</button>
+                <button id="reload" onclick="draw_graph();" data-hotkey="m" data-hotkey-desc="Reload node graph">Reload</button>
+
             </div>
         </div>
-        {{ tabs('line_graph') }}
+        {{ tabs('node_graph') }}
     </section>
 
 
-    <script src="{{url_for('static', filename='js/line_graph.js')}}"></script>
-    <script src="{{url_for('static', filename='js/component_storage_line_graph.js')}}"></script>
+    <script src="{{url_for('static', filename='js/node_graph.js')}}"></script>
+    <script src="{{url_for('static', filename='js/component_storage_node_graph.js')}}"></script>
     <script src="{{url_for('static', filename='js/dd_disabler.js')}}"></script>
 </main>
 {% endblock content %}

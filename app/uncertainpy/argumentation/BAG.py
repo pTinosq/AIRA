@@ -1,6 +1,5 @@
 import os
 import re
-import string
 from .Argument import Argument
 from .Support import Support
 from .Attack import Attack
@@ -80,7 +79,7 @@ class BAG:
         return list(self.arguments.values())
 
     def __str__(self) -> str:
-        return f"BAG set to read from {self.path} with arguments: {self.arguments}, attacks: {self.attacks} and supports: {self.supports}"
+        return f"BAG {'is reading from file' if self.is_path else 'is reading from text input'} with arguments: {self.arguments}, attacks: {self.attacks} and supports: {self.supports}"
 
     def __repr__(self) -> str:
         return f"BAG({self.path}) Arguments: {self.arguments} Attacks: {self.attacks} Supports: {self.supports}"

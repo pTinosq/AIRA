@@ -4,8 +4,10 @@ function draw_graph() {
     } catch (error) {}
     document.getElementById("spinner_base").style.display = 'block';
     document.getElementById("response_base").style.display = 'none';
-    fetch('/api/draw_graph?' + new URLSearchParams({
-            d: get_ls_data()
+    document.getElementById("reload").disabled = true;
+    document.getElementById("toggle_auto_redraw").disabled = true;
+    fetch('/api/draw_nodes?' + new URLSearchParams({
+            d: get_ls_data(),
         }))
         .then(function (response) {
             return response.json()
@@ -17,20 +19,23 @@ function draw_graph() {
                 plot.alt = 'plot';
                 plot.src = `data:image/png;base64, ${result[1]}`
                 plot.id = "b64plot";
-                document.getElementById("line_graph_image").appendChild(plot);
+                document.getElementById("node_graph_image").appendChild(plot);
             } else {
                 document.getElementById("spinner_base").style.display = 'none';
                 document.getElementById("response_base").style.display = 'block';
                 document.getElementById("response_title").innerText = `Error: ${result[1]}`;
                 document.getElementById("response_body").innerText = result[2];
             }
-        }).then(function (result) {
+        }).then(function () {
             contents = document.getElementsByClassName("aside_data");
 
             for (var i = 0; i < contents.length; i++) {
                 // Set to undisabled (after loading) - prevents spam
                 contents[i].disabled = false;
             }
+            
+            document.getElementById("reload").disabled = false;
+            document.getElementById("toggle_auto_redraw").disabled = false;
         })
 }
 
