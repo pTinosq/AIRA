@@ -107,3 +107,13 @@ aside {
 .aside_child:not(.aside_child:nth-child(1)) {
   padding-top: 32px;
 }
+
+.aside_divider {
+  margin-top: 32px;
+  position: relative; 
+  left: 50%;
+  width: 82%;
+  transform: translateX(-50%);
+  height: 2px;
+  background-color: var(--dark);
+}

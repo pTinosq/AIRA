@@ -1,12 +1,21 @@
-{% macro aside_dropdown(id, hotkey, label, name, options) -%}
+{% macro aside_dropdown(id, hotkey, label, name, options, default_value="") -%}
 
 <div class='aside_dropdown aside_child' id="{{ id+'_master' }}">
     <label for="{{ id }}">{{ label|safe }}</label>
     <div class="select-wrapper">
         <img src="{{ url_for('static', filename='images/arrow-down.svg') }}" alt="">
-        <select data-hotkey="{{ hotkey }}" data-hotkey-desc="{{ name }} (aside)" class="aside_data" name="{{ id }}" id="{{ id }}">
+        <select data-hotkey="{{ hotkey }}" data-hotkey-desc="{{ name }} (aside)" class="aside_data" name="{{ id }}"
+            id="{{ id }}">
             {% for option in options %}
+
+            {% if options[option] == default_value %}
+            <option value="{{ options[option] }}" selected>{{ option }}</option>
+
+            {% else %}
             <option value="{{ options[option] }}">{{ option }}</option>
+
+            {% endif %}
+
             {% endfor %}
         </select>
     </div>
@@ -14,24 +23,40 @@
 {%- endmacro %}
 
 
-{% macro aside_float(id, hotkey, label, name, placeholder, min=0) -%}
+{% macro aside_float(id, hotkey, label, name, placeholder, min=0, default_value="") -%}
 
 <div class='aside_float aside_child' id="{{ id+'_master' }}">
     <label for="{{ id }}">{{ label|safe }}</label>
-    <input class="aside_data" data-hotkey="{{ hotkey }}" data-hotkey-desc="{{ name }} (aside)" type="number" id="{{ id }}" min={{min}} step=".001" placeholder="{{ placeholder }}">
+    <input class="aside_data" data-hotkey="{{ hotkey }}" data-hotkey-desc="{{ name }} (aside)" type="number"
+        id="{{ id }}" min={{min}} step=".001" placeholder="{{ placeholder }}" value="{{ default_value }}">
 </div>
 {%- endmacro %}
+
+
+{% macro aside_divider() -%}
+<div class='aside_divider'></div>
+{%- endmacro %}
+
 
 {% macro aside() %}
 <aside>
     <form action="" method="get">
-        {{ aside_dropdown("model_aside_dd", "shift+m", "<span>M</span>odel", "Model", {"Quadratic Energy": "QuadraticEnergyModel", "Squared Energy": "SquaredEnergyModel", "Continuous DFQuAD":"ContinuousDFQuADModel", "Continuous Squared DFQuAD":"ContinuousSquaredDFQuADModel", "Continuous Euler Based":"ContinuousEulerBasedModel", "Continuous Modular":"ContinuousModularModel"}) }}
-        {{ aside_dropdown("approx_aside_dd", "shift+a", "<span>A</span>pproximator", "Approximator", {"RK4": "RK4"}) }}
+        {{ aside_dropdown("model_aside_dd", "shift+s", "<span>S</span>emantics", "Semantics", {"Quadratic Energy": "QuadraticEnergyModel", "Squared Energy": "SquaredEnergyModel", "Continuous DFQuAD":"ContinuousDFQuADModel", "Continuous Squared DFQuAD":"ContinuousSquaredDFQuADModel", "Continuous Euler Based":"ContinuousEulerBasedModel", "Continuous Modular":"ContinuousModularModel"})}}
+
+
         {{ aside_dropdown("aggr_aside_dd", "shift+g", "A<span class='spo'>g</span>gregate", "Aggregate", {"Product Aggregation": "ProductAggregation", "Sum Aggregation":"SumAggregation"}) }}
+
         {{ aside_dropdown("inf_aside_dd", "shift+i", "<span>I</span>nfluence", "Influence", {"Euler based": "EulerBasedInfluence", "Linear": "LinearInfluence", "Quadratic Maximum": "QuadraticMaximumInfluence"}) }}
+
         {{ aside_float("inf_aside_fl", "shift+c", "Influence <span>C</span>onservativeness", "Influence Conservativeness", "Enter influence Conservativeness here") }}
-        {{ aside_float("delta_aside_fl", "shift+d", "<span>D</span>elta", "Delta", "Enter Delta value here") }}
-        {{ aside_float("epsilon_aside_fl", "shift+e", "<span>E</span>psilon", "Epsilon", "Enter Epsilon value here") }}
+
+        {{ aside_divider() }}
+
+        {{ aside_dropdown("approx_aside_dd", "shift+a", "Inference <span>A</span>lgorithm", "Inference Algorithm", {"RK4": "RK4"}) }}
+
+        {{ aside_float("delta_aside_fl", "shift+d", "<span>D</span>elta", "Delta", "Enter Delta value here", 0, "10e-2") }}
+
+        {{ aside_float("epsilon_aside_fl", "shift+e", "<span>E</span>psilon", "Epsilon", "Enter Epsilon value here", 0, "10e-4") }}
     </form>
 </aside>
 {% endmacro %}
