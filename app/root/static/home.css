@@ -1,9 +1,38 @@
 #BAG_text_form {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   height: 100%;
+  border-radius: 16px;
 }
 
 #BAG_text {
   width: 100%;
   height: 100%;
+}
+
+.BAG_bar {
+  display: flex;
+  transition: 1s;
+  position: absolute;
+  width: 100%;
+  min-height: 64px;
+  transform: translateY(0%);
+  opacity: 1;
+  cursor: pointer;
+  padding: 36px;
+}
+
+.BAG_bar p {
+  color: #28242e;
+  text-align: center;
+  margin: auto;
+}
+
+#save_bar {
+  background: #54ff4f;
+}
+
+#warning_bar {
+  background: #ffc350;
 }

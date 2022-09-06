@@ -19,7 +19,6 @@
 
 <main>
     {{ aside() }}
-
     <section>
         <div id="section_child">
             <div class="title_bar">
@@ -31,12 +30,24 @@
             </div>
             <form id="BAG_text_form" action="" method="get">
                 <textarea name="BAG_text" id="BAG_text" data-hotkey="/" data-hotkey-desc="Edit BAG"></textarea>
+                <div class="BAG_bar" id="save_bar">
+                    <p>Saved successfully. (Click to hide)</p>
+                </div>
+
+                <div class="BAG_bar" id="warning_bar">
+                    <p>
+                        Your BAG format is set to <code>modern</code> but no semicolons were found.
+                        <br>
+                        <br>
+                        The BAG has been saved regardless. (Click to hide)
+                    </p>
+                </div>
             </form>
             <div class="title_bar">
                 <button onclick="open_keybind_modal()" id="show_keybinds" data-hotkey="z"
                     data-hotkey-desc="Show keybinds">Show keybinds</button>
-                    
-                    <label for="compiletype">BAG Format:</label>
+
+                <label for="compiletype">BAG Format:</label>
                 <select name="compiletype" id="compiletype" onchange="set_compiletype()">
                     <option value="legacy" selected>Legacy (newline)</option>
                     <option value="modern">Modern (semicolon)</option>

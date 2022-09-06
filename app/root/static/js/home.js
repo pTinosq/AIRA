@@ -20,11 +20,22 @@ document.addEventListener("DOMContentLoaded", (e) => {
     } else {
         document.getElementById("compiletype").value = "modern";
     }
+
+    document.getElementById("save_bar").addEventListener("click", (e) => {
+        document.getElementById("save_bar").style.transform = "translateY(0%)";
+    });
+
+    document.getElementById("warning_bar").addEventListener("click", (e) => {
+        document.getElementById("warning_bar").style.transform = "translateY(0%)";
+    });
 })
 
 function set_compiletype() {
     ls_set('BAG_LEGACY', document.getElementById("compiletype").value)
+}
 
+function show_modal(modal_id) {
+    document.getElementById(modal_id).style.transform = "translateY(-100%)";
 }
 
 function save_bag() {
@@ -33,7 +44,12 @@ function save_bag() {
 
     ls_set('BAG_LEGACY', document.getElementById("compiletype").value)
 
-    alert("Saved");
+    // Check if BAG_text contains semicolons
+    if (!document.getElementById("BAG_text").value.includes(";") && document.getElementById("compiletype").value == "modern") {
+        show_modal("warning_bar");
+    } else {
+        show_modal("save_bar");
+    }
 }
 
 
