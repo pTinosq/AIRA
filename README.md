@@ -1,8 +1,8 @@
-# AIFA
-> Argumentation Is F***ing Awesome
+# AIRA
+> Argumentation Is Really Awesome
 
-## What is AIFA?
-AIFA is a web platform used to demonstrate a variety of argumentation methods currently being researched by Nico Potyka at Imperial College London.
+## What is AIRA?
+AIRA is a web platform used to demonstrate a variety of argumentation methods currently being researched by Nico Potyka at Imperial College London.
 The original Uncertainpy argumentation library was built with Java and is available for download on its [sourceforge page](https://sourceforge.net/projects/attractorproject/).
 
 ## Running locally
