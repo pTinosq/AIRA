@@ -21,3 +21,10 @@ serve(app, host='0.0.0.0', port=8080)
 Run the new local wsgi script
 
 `python wsgi_local.py`
+
+## Image showcase
+
+![BAG Editor - Home page](https://i.imgur.com/TVJUyN2.png "BAG Editor - Home page")
+![Line graph viewer](https://i.imgur.com/bWyT5Dp.png "Line graph viewer")
+![Node graph viewer](https://i.imgur.com/rFUuhL0.png "Node graph viewer")
+![Verbose output viewer](https://i.imgur.com/8qrrn38.png "Verbose output viewer")
