@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+wsgi_local.py
+runwin.bat
 
 # C extensions
 *.so
