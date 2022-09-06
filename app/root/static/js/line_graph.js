@@ -56,7 +56,11 @@ document.addEventListener("DOMContentLoaded", (e) => {
 function open_image_in_new_tab() {
     var x = document.getElementById("b64plot");
     if (typeof (x) != 'undefined' && x != null) {
-        window.open(x.src);
+        var image = new Image();
+        image.src =  x.src;
+
+        var w = window.open("");
+        w.document.write(image.outerHTML);
     }
 }
 
