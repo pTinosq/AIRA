@@ -62,6 +62,16 @@ h2 {
   margin: 0;
 }
 
+.title_bar > label {
+  font-size: 14px;
+  font-weight: 400;
+  height: fit-content;
+  position: relative;
+  top: 50%;
+  translate: 0% -50%;
+  font-family: consolas, monospace;
+}
+
 textarea {
   color: var(--light);
   background-color: var(--dark);
@@ -117,7 +127,8 @@ main {
 }
 
 .title_bar button,
-.title_bar input {
+.title_bar input,
+.title_bar select {
   font-family: consolas, monospace;
   float: right;
   color: var(--light);

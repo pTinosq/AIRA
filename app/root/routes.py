@@ -3,7 +3,7 @@ import base64
 import ast
 from .formDataHandler import graph_from_ls, vbo_from_ls, nodes_from_ls, isBase64
 
-from root import app
+from . import app
 
 
 @app.route('/', methods=['GET', 'POST'])

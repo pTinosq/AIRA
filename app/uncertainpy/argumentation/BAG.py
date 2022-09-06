@@ -4,19 +4,44 @@ from .Argument import Argument
 from .Support import Support
 from .Attack import Attack
 
+class BAGParseError(Exception):
+    pass
+
 
 class BAG:
     arguments = {}
     attacks = []
     supports = []
 
-    def __init__(self, content=None, is_path=False):
+    def __init__(self, content=None, is_path=False, legacy=False):
+        """Creates a BAG object from a file or a string
+
+        Args:
+            content (str, optional): The path to the file or the string. Defaults to None.
+            is_path (bool, optional): If the content is a path or not. Defaults to False.
+            legacy (bool, optional): If the content should be parsed using legacy (Newline) or modern (Semicolon) methods. Defaults to False.
+
+        Raises:
+            TypeError: If the content is not a string
+            FileNotFoundError: If the file is not found
+
+        Returns:
+            BAG: The BAG object
+
+        Examples:
+            >>> bag = BAG("your_BAG_string")
+            >>> bag = BAG("path/to/file.bag", is_path=True)
+            >>> bag = BAG("path/to/file.bag", is_path=True, legacy=True)
+            >>> bag = BAG("your_legacy_BAG_string", legacy=True)
+        """
         self.content = content
         self.is_path = is_path
+        self.legacy = legacy
         self.arguments.clear()
 
         if (content is None):
             pass
+
         else:
             BAG_lines = []
 
@@ -24,26 +49,35 @@ class BAG:
                 with open(os.path.abspath(content), "r") as f:
                     content = f.read()
 
-            content = content.replace("\n", "")  # Convert to one line
-            BAG_lines = content.split(";")  # Split at semi colons
+            if (legacy):
+                BAG_lines = content.splitlines()
+
+            else:
+                content = content.replace("\n", "")  # Convert to one line
+                BAG_lines = content.split(";")  # Split at semi colons
+
             BAG_lines = list(filter(None, BAG_lines))  # Removes empty strings
 
             for line in BAG_lines:
-                k_name = line.split("(")[0]
-                k_args = re.findall(rf"{k_name}\((.*?)\)", line)[0].replace(" ", "").split(",")
-                if k_name == "arg":
-                    argument = Argument(k_args[0], float(k_args[1]), None, [], [])
-                    self.arguments[argument.name] = argument
+                try:
+                    k_name = line.split("(")[0]
+                    k_args = re.findall(rf"{k_name}\((.*?)\)", line)[0].replace(" ", "").split(",")
+                    if k_name == "arg":
+                        argument = Argument(k_args[0], float(k_args[1]), None, [], [])
+                        self.arguments[argument.name] = argument
 
-                elif k_name == "att":
-                    attacker = self.arguments[k_args[0]]
-                    attacked = self.arguments[k_args[1]]
-                    self.add_attack(attacker, attacked)
+                    elif k_name == "att":
+                        attacker = self.arguments[k_args[0]]
+                        attacked = self.arguments[k_args[1]]
+                        self.add_attack(attacker, attacked)
 
-                elif k_name == "sup":
-                    supporter = self.arguments[k_args[0]]
-                    supported = self.arguments[k_args[1]]
-                    self.add_support(supporter, supported)
+                    elif k_name == "sup":
+                        supporter = self.arguments[k_args[0]]
+                        supported = self.arguments[k_args[1]]
+                        self.add_support(supporter, supported)
+                except KeyError:
+                    raise BAGParseError(f"Error while parsing BAG content.\nThis is likely caused by a legacy dependency issue. Please set the legacy argument to the correct value.")
+
 
     def add_attack(self, attacker, attacked):
         if type(attacker) != Argument:

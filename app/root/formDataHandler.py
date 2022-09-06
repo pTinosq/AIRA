@@ -1,8 +1,10 @@
 import base64
 import traceback
-import uncertainpy.argumentation as arg
-from uncertainpy.argumentation.graphing import graph
-from uncertainpy.argumentation.Argument import Argument
+
+from ..uncertainpy.argumentation.BAG import BAGParseError
+from ..uncertainpy import argumentation as arg
+from ..uncertainpy.argumentation.graphing import graph
+from ..uncertainpy.argumentation.Argument import Argument
 import io
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -96,7 +98,12 @@ def generate_model(x, return_vbo, draw_graph, draw_nodes) -> list:
 
             bag = base64.b64decode(x['BAG']).decode()
 
-            model.BAG = arg.BAG(bag)
+            if x['BAG_LEGACY'] == 'legacy':
+                is_legacy = True
+            else:
+                is_legacy = False
+
+            model.BAG = arg.BAG(bag, legacy=is_legacy)
 
         else:
             return return_invalid('Invalid BAG', 'Something went wrong with the BAG input you provided. Perhaps you forgot to save?')
@@ -178,6 +185,9 @@ def generate_model(x, return_vbo, draw_graph, draw_nodes) -> list:
             return [True, plotb64.decode()]
 
         return None
+    
+    except BAGParseError:
+        return return_invalid('Invalid BAG', 'Something went wrong with the BAG input you provided.\nPerhaps you forgot to set the parsing mode to either Legacy (For newline BAG files) or Modern (For semicolon BAG files) ?')
 
     except OverflowError:
         return return_invalid('Overflow Error', 'Python has had an overflow error. You have probably set a value too large. (Probably Delta)')

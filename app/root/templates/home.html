@@ -24,7 +24,9 @@
         <div id="section_child">
             <div class="title_bar">
                 <h2>BAG</h2>
-                <input id="BAG_load_from_file" type="file" accept=".txt,.bag" onchange="load_from_file()" data-hotkey="o" data-hotkey-desc="BAG from file"></input>
+
+                <input id="BAG_load_from_file" type="file" accept=".txt,.bag" onchange="load_from_file()"
+                    data-hotkey="o" data-hotkey-desc="BAG from file"></input>
                 <button onclick="clear_bag()" data-hotkey="p" data-hotkey-desc="Clear">Clear</button>
             </div>
             <form id="BAG_text_form" action="" method="get">
@@ -33,6 +35,12 @@
             <div class="title_bar">
                 <button onclick="open_keybind_modal()" id="show_keybinds" data-hotkey="z"
                     data-hotkey-desc="Show keybinds">Show keybinds</button>
+                    
+                    <label for="compiletype">BAG Format:</label>
+                <select name="compiletype" id="compiletype" onchange="set_compiletype()">
+                    <option value="legacy" selected>Legacy (newline)</option>
+                    <option value="modern">Modern (semicolon)</option>
+                </select>
                 <button onclick="save_bag()" data-hotkey="ctrl+s,m" data-hotkey-desc="Save BAG">Save</button>
             </div>
         </div>

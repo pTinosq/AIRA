@@ -3,6 +3,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
         ls_set('BAG', document.getElementById("BAG_text").value);
     }
 
+    if (ls_get('BAG_LEGACY') == null) {
+        ls_set('BAG_LEGACY', document.getElementById("compiletype").value);
+    }
+
     // Now we go ahead and load all the aside LS data into the actual aside menu.
     if (ls_get('BAG') == "undefined") {
         // Do nothing (placeholder will show up)
@@ -10,13 +14,28 @@ document.addEventListener("DOMContentLoaded", (e) => {
         // Set the item value
         document.getElementById("BAG_text").value = atob(ls_get('BAG'));
     }
+
+    if (ls_get('BAG_LEGACY') == "legacy") {
+        document.getElementById("compiletype").value = "legacy";
+    } else {
+        document.getElementById("compiletype").value = "modern";
+    }
 })
+
+function set_compiletype() {
+    ls_set('BAG_LEGACY', document.getElementById("compiletype").value)
+
+}
 
 function save_bag() {
     // Saves BAG data to localstorage
     ls_set('BAG', btoa(document.getElementById("BAG_text").value))
+
+    ls_set('BAG_LEGACY', document.getElementById("compiletype").value)
+
     alert("Saved");
 }
+
 
 function clear_bag() {
     // Clears BAG - NOT FROM LS JUST FROM TEXTAREA

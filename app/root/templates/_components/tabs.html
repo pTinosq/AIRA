@@ -13,6 +13,14 @@
     {"href":"/verbose_output", "hotkey": "j", "name": "Verbose output", "id":"verbose_output"},
 ] %}
 
+<script>
+    // get window width
+    var w = window.innerWidth;
+    if (w < 900) {
+        alert("This website was built for desktop use only. A larger screen is highly recommended.");
+    }
+</script>
+
 <nav>
     <div class="tabs">
         {% for page in pages %}
