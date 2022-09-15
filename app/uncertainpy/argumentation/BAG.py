@@ -53,15 +53,26 @@ class BAG:
                 BAG_lines = content.splitlines()
 
             else:
+                r = r'/\*(.|\n)*?\*/'
+                content = re.sub(r, '', content)
+
+                for z,l in enumerate(content.splitlines()):
+                    if (not legacy) and (';' not in l) and (len(l.strip()) > 0):
+                        if '#' in l:
+                            pass
+                        else:
+                            raise BAGParseError(f'Error on line {z+1}: {l}\nNo closing semicolon found.')
+
                 content = content.replace("\n", "")  # Convert to one line
                 BAG_lines = content.split(";")  # Split at semi colons
 
             BAG_lines = list(filter(None, BAG_lines))  # Removes empty strings
-
             for line in BAG_lines:
                 try:
+
                     k_name = line.split("(")[0]
                     k_args = re.findall(rf"{k_name}\((.*?)\)", line)[0].replace(" ", "").split(",")
+
                     if k_name == "arg":
                         argument = Argument(k_args[0], float(k_args[1]), None, [], [])
                         self.arguments[argument.name] = argument
@@ -75,8 +86,8 @@ class BAG:
                         supporter = self.arguments[k_args[0]]
                         supported = self.arguments[k_args[1]]
                         self.add_support(supporter, supported)
-                except KeyError:
-                    raise BAGParseError(f"Error while parsing BAG content.\nThis is likely caused by a legacy dependency issue. Please set the legacy argument to the correct value.")
+                except KeyError as e:
+                    raise BAGParseError(f"{e} - Error while parsing BAG content.\nThis is likely caused by a legacy dependency issue. Please set the legacy argument to the correct value.")
 
 
     def add_attack(self, attacker, attacked):

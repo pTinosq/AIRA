@@ -1,0 +1,54 @@
+/* Should I buy or short NVDA Stocks based on recent news? */
+/* This is an example. This news is not real. */
+
+arg(Buy_NVDA, 0.5);
+arg(Short_NVDA, 0.5);
+
+/* Recent news */
+arg(New_Experienced_CEO, 0.8);
+arg(Workers_Strike, 0.46);
+arg(Competition, 0.4);
+arg(New_Graphics_Card, 0.55);
+arg(Chip_Shortage, 0.6);
+arg(Merger, 0.16);
+
+
+/* New CEO */
+sup(New_Experienced_CEO, Buy_NVDA);
+att(New_Experienced_CEO, Short_NVDA);
+att(New_Experienced_CEO, Competition);
+sup(New_Experienced_CEO, Merger);
+
+/* Worker strikes */
+sup(Workers_Strike, Short_NVDA);
+att(Workers_Strike, Buy_NVDA);
+att(Workers_Strike, New_Experienced_CEO);
+sup(Workers_Strike, Chip_Shortage);
+
+/* Competition is catching up */
+sup(Competition, Short_NVDA);
+att(Competition, Buy_NVDA);
+att(Competition, New_Graphics_Card);
+
+/* New graphics card coming soon */
+sup(New_Graphics_Card, Buy_NVDA);
+att(New_Graphics_Card, Short_NVDA);
+att(New_Graphics_Card, Competition);
+
+/* Chip shortage */
+sup(Chip_Shortage, Short_NVDA);
+att(Chip_Shortage, Buy_NVDA);
+att(Chip_Shortage, New_Graphics_Card);
+sup(Chip_Shortage, Competition);
+att(Chip_Shortage, Merger);
+sup(Chip_Shortage, Workers_Strike);
+
+/* Unlikely rumour of merger */
+sup(Merger, Buy_NVDA);
+att(Merger, Short_NVDA);
+sup(Merger, New_Experienced_CEO);
+att(Merger, Competition);
+att(Merger, Workers_Strike);
+
+att(Buy_NVDA, Short_NVDA);
+att(Short_NVDA, Buy_NVDA);

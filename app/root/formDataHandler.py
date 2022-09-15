@@ -186,8 +186,8 @@ def generate_model(x, return_vbo, draw_graph, draw_nodes) -> list:
 
         return None
     
-    except BAGParseError:
-        return return_invalid('Invalid BAG', 'Something went wrong with the BAG input you provided.\nPerhaps you forgot to set the parsing mode to either Legacy (For newline BAG files) or Modern (For semicolon BAG files) ?')
+    except BAGParseError as e:
+        return return_invalid('Invalid BAG', f'Something went wrong with the BAG input you provided.\nPerhaps you forgot to set the parsing mode to either Legacy (For newline BAG files) or Modern (For semicolon BAG files)?\n\n {e}')
 
     except OverflowError:
         return return_invalid('Overflow Error', 'Python has had an overflow error. You have probably set a value too large. (Probably Delta)')
