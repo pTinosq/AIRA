@@ -1,5 +1,3 @@
-# Stock example
-
 arg(Buy, 0.5)
 arg(Sell, 0.5)
 arg(1, 0.8)

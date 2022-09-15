@@ -1,5 +1,3 @@
-# Rago et al democracy
-
 arg(A1, 0.5).
 arg(A2, 0.5).
 arg(P1, 0.7).
