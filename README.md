@@ -2,7 +2,7 @@
 > Argumentation Is Really Awesome
 
 ## What is AIRA?
-AIRA is a web platform used to demonstrate a variety of argumentation methods currently being researched by Nico Potyka at Imperial College London.
+AIRA is a web platform used to demonstrate a variety of argumentation methods currently based on research by Nico Potyka at Imperial College London.
 The original Uncertainpy argumentation library was built with Java and is available for download on its [sourceforge page](https://sourceforge.net/projects/attractorproject/).
 
 ## Running locally
